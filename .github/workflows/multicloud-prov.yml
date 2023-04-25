@@ -1,0 +1,22 @@
+name: 'Multi-cloud provisioning'
+
+jobs:
+  provisioning:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Deploy infrastructure
+        run: |
+          if [ "${{ env.CLOUD_PROVIDER }}" = "aws" ]; then
+            cd aws/${{ env.CLOUD_ENV }}
+            terraform apply -var "aws_region=us-east-1"
+          elif [ "${{ env.CLOUD_PROVIDER }}" = "azure" ]; then
+            cd azure/${{ env.CLOUD_ENV }}
+            terraform apply -var "azure_location=eastus"
+          fi

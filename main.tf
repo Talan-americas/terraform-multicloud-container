@@ -4,11 +4,11 @@ terraform {
 
 # Include Azure and AWS resources
 module "azure_resources"{
-    source = "./azure"
+    source = "./azure/dev"
     azure_location = var.azure_location
 }
 
 module "aws_resources"{
-    source = "./aws"
+    source = "./aws/dev"
     aws_region = var.aws_region
 }
